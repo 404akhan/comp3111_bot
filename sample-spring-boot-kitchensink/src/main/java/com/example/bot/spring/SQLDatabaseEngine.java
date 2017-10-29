@@ -56,7 +56,7 @@ public class SQLDatabaseEngine {
 		Connection connection = getConnection();
 
 		PreparedStatement stmt = connection.prepareStatement(
-			"SELECT * FROM Users WHERE id=?");
+			"SELECT * FROM Users WHERE userId=?");
 		stmt.setString(1, userId);
 		ResultSet rs = stmt.executeQuery();
 

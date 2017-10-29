@@ -82,6 +82,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @LineMessageHandler
 public class KitchenSinkController {
+    public KitchenSinkController() {
+        database = new SQLDatabaseEngine();
+    }
+
+    private SQLDatabaseEngine database;
+
     @Autowired
     private LineMessagingClient lineMessagingClient;
 
@@ -411,6 +417,7 @@ public class KitchenSinkController {
                 break;
             default:
                 log.info("Returns echo message {}: {}", replyToken, text);
+                text += database.search(text);
                 this.replyText(
                         replyToken,
                         text

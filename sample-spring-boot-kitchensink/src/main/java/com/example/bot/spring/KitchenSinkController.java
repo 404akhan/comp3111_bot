@@ -438,6 +438,7 @@ public class KitchenSinkController {
             default:
                 int userState = -2;
                 userState = database.getStateUser(userId);
+                database.setStateUser(userId, userState + 1);
 
                 log.info("Returns echo message {}: {}", replyToken, text);
                 text += "\n" + database.search(text);

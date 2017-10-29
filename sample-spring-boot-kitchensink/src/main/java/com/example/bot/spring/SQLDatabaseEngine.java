@@ -77,6 +77,17 @@ public class SQLDatabaseEngine {
 
 		return -1;
 	}
+
+	void setStateUser(String userId, int state) throws Exception {
+		Connection connection = getConnection();
+
+		PreparedStatement stmt = connection.prepareStatement(
+			"UPDATE Users SET dialogState=? WHERE userId=?");
+		stmt.setInt(1, state);
+		stmt.setString(2, userId);
+
+		stmt.executeUpdate();
+	}
 	
 	private Connection getConnection() throws URISyntaxException, SQLException {
 		Connection connection;

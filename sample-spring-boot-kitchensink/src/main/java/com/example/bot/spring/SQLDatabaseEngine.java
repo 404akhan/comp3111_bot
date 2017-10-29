@@ -30,17 +30,10 @@ public class SQLDatabaseEngine {
 			"SELECT userId, name, weight FROM Users where name like concat('%', ?, '%')");
 		stmt.setString(1, text);
 		ResultSet rs = stmt.executeQuery();
-		
-		// PreparedStatement stmt = connection.prepareStatement("SELECT * FROM keyresp2 WHERE name=");
-		// ResultSet rs = stmt.executeQuery();
 
 		while(rs.next()) {
-			// if (text.toLowerCase().contains(rs.getString(2).toLowerCase())) {
-			// 	result = rs.getString(3);
-			// 	return result;
-			// }
 			result = rs.getString(3);
-			return result;
+			break;
 		}
 		rs.close();
 		stmt.close();

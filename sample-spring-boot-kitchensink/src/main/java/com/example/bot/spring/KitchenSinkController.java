@@ -416,8 +416,12 @@ public class KitchenSinkController {
                 ));
                 break;
             default:
+                String userId = event.getSource().getUserId();
+
                 log.info("Returns echo message {}: {}", replyToken, text);
-                text += database.search(text);
+                text += "\n" + database.search(text);
+                text += "\n" + userId;
+
                 this.replyText(
                         replyToken,
                         text

@@ -18,4 +18,9 @@ apply plugin: 'org.springframework.boot'
 
 dependencies {
     compile project(':line-bot-spring-boot')
+    compile group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
+}
+
+test {
+    environment "DATABASE_URL", "postgres://wayigilluozxkq:cc228562345ca622242044d6bb2f56ed6db75ec775a9214974175e128b706ccb@ec2-23-23-223-2.compute-1.amazonaws.com:5432/d9724939catru7" 
 }

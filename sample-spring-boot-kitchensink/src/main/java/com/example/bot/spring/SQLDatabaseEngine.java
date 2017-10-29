@@ -70,7 +70,7 @@ public class SQLDatabaseEngine {
 			"SELECT dialogState FROM Users WHERE userId=?");
 		stmt.setString(1, userId);
 
-		Result rs = stmt.executeQuery();
+		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			return rs.getInt(1);
 		}

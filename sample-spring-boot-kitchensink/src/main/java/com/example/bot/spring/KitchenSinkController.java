@@ -255,6 +255,8 @@ public class KitchenSinkController {
                     try {
                         database.createUser(userId, name);
                     } catch(Exception e) {
+                        this.replyText(replyToken, e.getMessage());
+                        // return;
                     }
                 });
         }

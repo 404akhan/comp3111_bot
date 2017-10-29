@@ -49,7 +49,12 @@ public class SQLDatabaseEngine {
 		while(rs.next())
 			count++;
 
-		return count != 0;
+		boolean existUser = count != 0;
+
+		rs.close();
+		stmt.close();
+		connection.close();
+		return existUser;
 	}
 
 	void createUser(String userId, String name) throws Exception {
@@ -61,6 +66,8 @@ public class SQLDatabaseEngine {
 		stmt.setString(2, name);
 
 		stmt.executeUpdate();
+		stmt.close();
+		connection.close();
 	}	
 
 	int getStateUser(String userId) throws Exception {
@@ -71,11 +78,17 @@ public class SQLDatabaseEngine {
 		stmt.setString(1, userId);
 
 		ResultSet rs = stmt.executeQuery();
+
+		int dialogState = -1;
 		while(rs.next()) {
-			return rs.getInt(1);
+			int dialogState = rs.getInt(1);
+			break;
 		}
 
-		return -1;
+		rs.close();
+		stmt.close();
+		connection.close();
+		return dialogState;
 	}
 
 	void setStateUser(String userId, int state) throws Exception {
@@ -87,6 +100,8 @@ public class SQLDatabaseEngine {
 		stmt.setString(2, userId);
 
 		stmt.executeUpdate();
+		stmt.close();
+		connection.close();
 	}
 
 	void setWeightUser(String userId, float weight) throws Exception {
@@ -98,13 +113,15 @@ public class SQLDatabaseEngine {
 		stmt.setString(2, userId);
 
 		stmt.executeUpdate();
+		stmt.close();
+		connection.close();
 	}
 	
 	void createWeightInstance(String userId, int year, int month, int day, float weight) throws Exception {
 		Connection connection = getConnection();
 
 		PreparedStatement stmt = connection.prepareStatement(
-			"INSERT INTO Weights (userId, year, month, day, weight) VALUE(?, ?, ?, ?, ?)");
+			"INSERT INTO Weights (userId, year, month, day, weight) VALUES (?, ?, ?, ?, ?)");
 		stmt.setString(1, userId);
 		stmt.setInt(2, year);
 		stmt.setInt(3, month);
@@ -112,6 +129,8 @@ public class SQLDatabaseEngine {
 		stmt.setFloat(5, weight);
 
 		stmt.executeUpdate();
+		stmt.close();
+		connection.close();
 	}
 
 	private Connection getConnection() throws URISyntaxException, SQLException {

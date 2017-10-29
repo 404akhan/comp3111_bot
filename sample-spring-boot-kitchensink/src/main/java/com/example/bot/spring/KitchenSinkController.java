@@ -453,8 +453,8 @@ public class KitchenSinkController {
                     int month = cal.get(Calendar.MONTH);
                     int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                    database.createWeightInstance(userId, year, month, day, weight);
                     database.setWeightUser(userId, weight);
+                    database.createWeightInstance(userId, year, month, day, weight);
                 } catch (NumberFormatException ex) {
                 } 
 

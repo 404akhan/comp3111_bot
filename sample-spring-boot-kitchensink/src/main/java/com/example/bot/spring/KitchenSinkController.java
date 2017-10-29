@@ -439,11 +439,29 @@ public class KitchenSinkController {
                 int userState = -2;
                 userState = database.getStateUser(userId);
                 database.setStateUser(userId, userState + 1);
+                
+                float weight;
+                try {
+                    weight = Float.parseFloat(text);
+
+                    Date date; 
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(date);
+                    int year = cal.get(Calendar.YEAR);
+                    int month = cal.get(Calendar.MONTH);
+                    int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                    createWeightInstance(userId, year, month, day, weight);
+                    setWeightUser(userId, weight);
+                } catch (NumberFormatException ex) {
+                } 
 
                 log.info("Returns echo message {}: {}", replyToken, text);
                 text += "\n" + database.search(text);
                 text += "\n" + userId;
                 text += "\nUser State: " + userState;
+
+
 
                 this.replyText(
                         replyToken,

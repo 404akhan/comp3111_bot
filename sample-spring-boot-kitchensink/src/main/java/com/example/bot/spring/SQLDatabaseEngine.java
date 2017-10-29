@@ -88,7 +88,32 @@ public class SQLDatabaseEngine {
 
 		stmt.executeUpdate();
 	}
+
+	void setWeightUser(String userId, float weight) throws Exception {
+		Connection connection = getConnection();
+
+		PreparedStatement stmt = connection.prepareStatement(
+			"UPDATE Users SET weight=? WHERE userId=?");
+		stmt.setFloat(1, weight);
+		stmt.setString(2, userId);
+
+		stmt.executeUpdate();
+	}
 	
+	void createWeightInstance(String userId, int year, int month, int day, float weight) {
+		Connection connection = getConnection();
+
+		PreparedStatement stmt = connection.prepareStatement(
+			"INSERT INTO Weights (userId, year, month, day, weight) VALUE(?, ?, ?, ?, ?)");
+		stmt.setString(1, userId);
+		stmt.setInt(2, year);
+		stmt.setInt(3, month);
+		stmt.setInt(4, day);
+		stmt.setFloat(5, weight);
+
+		stmt.executeUpdate();
+	}
+
 	private Connection getConnection() throws URISyntaxException, SQLException {
 		Connection connection;
 		URI dbUri = new URI(System.getenv("DATABASE_URL"));

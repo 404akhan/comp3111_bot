@@ -23,7 +23,7 @@ import java.net.URI;
 public class SQLDatabaseEngine {
 	String search(String text) throws Exception {
 		String result = null;
-		
+
 		Connection connection = getConnection();
 		PreparedStatement stmt = connection.prepareStatement("SELECT * FROM keyresp2");
 		ResultSet rs = stmt.executeQuery();

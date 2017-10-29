@@ -100,7 +100,7 @@ public class SQLDatabaseEngine {
 		stmt.executeUpdate();
 	}
 	
-	void createWeightInstance(String userId, int year, int month, int day, float weight) {
+	void createWeightInstance(String userId, int year, int month, int day, float weight) throws Exception {
 		Connection connection = getConnection();
 
 		PreparedStatement stmt = connection.prepareStatement(

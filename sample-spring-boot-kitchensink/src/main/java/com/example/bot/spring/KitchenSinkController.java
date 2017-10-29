@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
+import java.util.Date;
+import java.util.Calendar;
 
 import com.linecorp.bot.model.action.DatetimePickerAction;
 import com.linecorp.bot.model.message.template.*;
@@ -444,15 +446,15 @@ public class KitchenSinkController {
                 try {
                     weight = Float.parseFloat(text);
 
-                    Date date; 
+                    Date date = new Date(); 
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(date);
                     int year = cal.get(Calendar.YEAR);
                     int month = cal.get(Calendar.MONTH);
                     int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                    createWeightInstance(userId, year, month, day, weight);
-                    setWeightUser(userId, weight);
+                    database.createWeightInstance(userId, year, month, day, weight);
+                    database.setWeightUser(userId, weight);
                 } catch (NumberFormatException ex) {
                 } 
 

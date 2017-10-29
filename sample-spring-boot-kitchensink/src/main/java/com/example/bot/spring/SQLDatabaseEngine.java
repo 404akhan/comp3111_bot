@@ -81,7 +81,7 @@ public class SQLDatabaseEngine {
 
 		int dialogState = -1;
 		while(rs.next()) {
-			int dialogState = rs.getInt(1);
+			dialogState = rs.getInt(1);
 			break;
 		}
 

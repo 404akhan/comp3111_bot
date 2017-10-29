@@ -51,7 +51,32 @@ public class SQLDatabaseEngine {
 		else
 			return result;
 	}
-	
+
+	boolean existUser(String userId) throws Exception {
+		Connection connection = getConnection();
+
+		PreparedStatement stmt = connection.prepareStatement(
+			"SELECT * FROM Users WHERE id=?");
+		stmt.setString(1, userId);
+		ResultSet rs = stmt.executeQuery();
+
+		int count = 0;
+		while(rs.next())
+			count++;
+
+		return count != 0;
+	}
+
+	void createUser(String userId, String name) throws Exception {
+		Connection connection = getConnection();
+
+		PreparedStatement stmt = connection.prepareStatement(
+			"INSERT INTO Users (userId, name) VALUES (?, ?)");
+		stmt.setString(1, userId);
+		stmt.setString(2, name);
+
+		stmt.executeUpdate();
+	}	
 	
 	private Connection getConnection() throws URISyntaxException, SQLException {
 		Connection connection;
@@ -68,6 +93,5 @@ public class SQLDatabaseEngine {
 
 		return connection;
 	}
-
 }
 

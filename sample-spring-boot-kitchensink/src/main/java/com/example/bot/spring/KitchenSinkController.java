@@ -240,12 +240,30 @@ public class KitchenSinkController {
 
     private void handleTextContent(String replyToken, Event event, TextMessageContent content)
             throws Exception {
-        String text = content.getText();
+        String userId = event.getSource().getUserId();
+        
+        if( !database.existUser(userId)) {
+            lineMessagingClient
+                .getProfile(userId)
+                .whenComplete((profile, throwable) -> {
+                    if (throwable != null) {
+                        this.replyText(replyToken, throwable.getMessage());
+                        return;
+                    }
 
+                    String name = profile.getDisplayName();
+                    try {
+                        database.createUser(userId, name);
+                    } catch(Exception e) {
+                    }
+                });
+        }
+
+        String text = content.getText();
         log.info("Got text message from {}: {}", replyToken, text);
+
         switch (text) {
             case "profile": {
-                String userId = event.getSource().getUserId();
                 if (userId != null) {
                     lineMessagingClient
                             .getProfile(userId)
@@ -416,8 +434,6 @@ public class KitchenSinkController {
                 ));
                 break;
             default:
-                String userId = event.getSource().getUserId();
-
                 log.info("Returns echo message {}: {}", replyToken, text);
                 text += "\n" + database.search(text);
                 text += "\n" + userId;

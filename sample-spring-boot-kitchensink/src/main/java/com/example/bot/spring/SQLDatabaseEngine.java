@@ -27,7 +27,7 @@ public class SQLDatabaseEngine {
 		Connection connection = getConnection();
 		
 		PreparedStatement stmt = connection.prepareStatement(
-			"SELECT id, name, weight FROM Users where name like concat('%', ?, '%')");
+			"SELECT userId, name, weight FROM Users where name like concat('%', ?, '%')");
 		stmt.setString(1, text);
 		ResultSet rs = stmt.executeQuery();
 		

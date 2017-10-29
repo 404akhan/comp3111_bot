@@ -10,14 +10,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 
-// @Slf4j
-// public class SQLDatabaseEngine {
-// 	String search(String text) throws Exception {
-// 		String tvoya_mamka = "Fuck_yeah";
-// 		return tvoya_mamka;
-// 	}
-// }
-
 
 @Slf4j
 public class SQLDatabaseEngine {
@@ -70,6 +62,21 @@ public class SQLDatabaseEngine {
 
 		stmt.executeUpdate();
 	}	
+
+	int getStateUser(String userId) throws Exception {
+		Connection connection = getConnection();
+
+		PreparedStatement stmt = connection.prepareStatement(
+			"SELECT dialogState FROM Users WHERE userId=?");
+		stmt.setString(1, userId);
+
+		Result rs = stmt.executeQuery();
+		while(rs.next()) {
+			return rs.getInt(1);
+		}
+
+		return -1;
+	}
 	
 	private Connection getConnection() throws URISyntaxException, SQLException {
 		Connection connection;

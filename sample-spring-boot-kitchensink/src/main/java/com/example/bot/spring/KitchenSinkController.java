@@ -256,7 +256,7 @@ public class KitchenSinkController {
                         database.createUser(userId, name);
                     } catch(Exception e) {
                         this.replyText(replyToken, e.getMessage());
-                        // return;
+                        return;
                     }
                 });
         }
@@ -436,9 +436,13 @@ public class KitchenSinkController {
                 ));
                 break;
             default:
+                int userState = -2;
+                userState = database.getStateUser(userId);
+
                 log.info("Returns echo message {}: {}", replyToken, text);
                 text += "\n" + database.search(text);
                 text += "\n" + userId;
+                text += "\nUser State: " + userState;
 
                 this.replyText(
                         replyToken,
